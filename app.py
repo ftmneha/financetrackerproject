@@ -11,7 +11,10 @@ from reportlab.pdfgen import canvas
 import io
 # Create Flask application
 app = Flask(__name__)
-app.secret_key = "mysecretkey123"
+app.config["SECRET_KEY"] = os.environ.get(
+    "SECRET_KEY",
+    "local-development-only-change-me"
+)
 
 # Database configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///finance.db"
@@ -435,8 +438,9 @@ def set_budget():
 # Main Program
 # =====================================
 
-if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
+with app.app_context():
+    db.create_all()
 
+
+if __name__ == "__main__":
     app.run(debug=True)
