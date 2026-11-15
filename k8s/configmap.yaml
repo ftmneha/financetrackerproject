@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fintrack-config
+  namespace: finance-tracker
+  labels:
+    app: finance-tracker
+data:
+  FLASK_ENV: "production"
+  PORT: "8000"
+  DATABASE_URL: "sqlite:///instance/finance.db"

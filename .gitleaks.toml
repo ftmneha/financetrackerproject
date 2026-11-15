@@ -1,0 +1,20 @@
+# Gitleaks Configuration for Personal Finance Tracker
+# Used in CI/CD pipeline to prevent committed credentials and API tokens
+
+title = "FinTrack Pro Gitleaks Configuration"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Global allowlist for benign test strings and documentation"
+paths = [
+  '''reports/.*''',
+  '''\.git/.*''',
+  '''tests/.*'''
+]
+regexes = [
+  '''local-development-only-change-me''',
+  '''fintrack-cloud-devops-secret-key-2026''',
+  '''test-secret-key'''
+]

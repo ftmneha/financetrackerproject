@@ -1,0 +1,23 @@
+# Prometheus Configuration for Personal Finance Tracker
+# ADVANCEMENTS IN CLOUD AND DEVOPS (INT378)
+
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+  scrape_timeout: 4s
+
+scrape_configs:
+  - job_name: 'finance-tracker-app'
+    metrics_path: '/metrics'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['web:8000']
+        labels:
+          app: 'personal-finance-tracker'
+          env: 'production'
+          tier: 'backend'
+
+  - job_name: 'prometheus'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['localhost:9090']
