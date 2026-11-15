@@ -65,11 +65,40 @@ pipeline {
                 '''
             }
         }
+
+        stage('Secret Detection - Gitleaks') {
+            steps {
+                sh '''
+                    set -eu
+
+                    GITLEAKS_VERSION=8.30.1
+                    TEMP_DIR=$(mktemp -d)
+                    trap 'rm -rf "$TEMP_DIR"' EXIT
+
+                    curl -fsSL \
+                        "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+                        -o "$TEMP_DIR/gitleaks.tar.gz"
+
+                    tar -xzf "$TEMP_DIR/gitleaks.tar.gz" \
+                        -C "$TEMP_DIR" gitleaks
+
+                    "$TEMP_DIR/gitleaks" version
+
+                    "$TEMP_DIR/gitleaks" git \
+                        --redact \
+                        --no-banner \
+                        --report-format json \
+                        --report-path reports/gitleaks-report.json \
+                        .
+                '''
+            }
+        }
     }
 
     post {
         always {
             echo 'Archiving test results and security reports'
+
             archiveArtifacts artifacts: 'reports/**',
                 allowEmptyArchive: true
 
