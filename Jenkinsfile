@@ -59,7 +59,7 @@ pipeline {
             steps {
                 sh '''
                     . .venv/bin/activate
-                    pip-audit --local --path .venv/lib/python3.12/site-packages \
+                    pip-audit --path .venv/lib/python3.12/site-packages \
                         --format=json \
                         -o reports/pip-audit-report.json
                 '''
