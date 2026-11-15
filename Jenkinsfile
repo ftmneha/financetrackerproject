@@ -45,7 +45,7 @@ pipeline {
             steps {
                 sh '''
                     . .venv/bin/activate
-                    pytest \
+                    python -m pytest \
                         --junitxml=reports/test-results.xml \
                         --cov=. \
                         --cov-report=xml:reports/coverage.xml \
