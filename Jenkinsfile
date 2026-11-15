@@ -60,8 +60,7 @@ pipeline {
                 sh '''
                     . .venv/bin/activate
                     pip-audit --path .venv/lib/python3.12/site-packages \
-                        --format=json \
-                        -o reports/pip-audit-report.json
+                        --format=columns
                 '''
             }
         }
