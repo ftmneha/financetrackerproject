@@ -25,7 +25,7 @@ pipeline {
                     python --version
                     python -m venv .venv
                     . .venv/bin/activate
-                    python -m pip install --upgrade pip
+                    python -m pip install --upgrade pip --timeout 120 --retries 5
                     python -m pip install -r requirements.txt
                 '''
             }
